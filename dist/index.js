@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const transport_1 = require("./transport");
 const ledgerWallet_1 = require("./ledgerWallet");
 const magistrate_entity_1 = require("./magistrate_entity");
+const connection_1 = require("./connection");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("\n===== Testing a Magistrate Entity Transaction =====\n");
@@ -20,12 +21,13 @@ function main() {
         const ledgerAddress = yield ledgerWallet_1.getLedgerAddress(ledgerPublicKey);
         const ledgerNonce = yield ledgerWallet_1.getLedgerWalletNextNonce(ledgerAddress);
         magistrate_entity_1.registerEntityTransactions();
+        var nonce = parseInt(ledgerNonce);
         for (var asset of magistrate_entity_1.BUSINESS_ENTITY_ASSETS) {
             console.log("\n==================================================================");
-            const baseTx = magistrate_entity_1.getBusinessEntityTransaction(ledgerPublicKey, ledgerNonce, asset);
+            const baseTx = magistrate_entity_1.getBusinessEntityTransaction(ledgerPublicKey, nonce++, asset);
             const finalLedgerSignature = yield ledgerWallet_1.getLedgerSignature(arkTransport, magistrate_entity_1.getSigningPayload(baseTx));
             const finalTx = magistrate_entity_1.addFinalSignature(baseTx, finalLedgerSignature);
-            // await sendTransactionADN(finalTx);
+            yield connection_1.sendTransactionADN(finalTx);
         }
         ;
         console.log("\n==================================================================\n");

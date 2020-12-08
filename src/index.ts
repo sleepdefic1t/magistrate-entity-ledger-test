@@ -26,10 +26,12 @@ async function main() {
 
     registerEntityTransactions();
 
+    var nonce = parseInt(ledgerNonce);
+
     for (var asset of BUSINESS_ENTITY_ASSETS) {
         console.log("\n==================================================================");
 
-        const baseTx = getBusinessEntityTransaction(ledgerPublicKey, ledgerNonce, asset);
+        const baseTx = getBusinessEntityTransaction(ledgerPublicKey, nonce++, asset);
 
         const finalLedgerSignature = await getLedgerSignature(
             arkTransport,
@@ -38,7 +40,7 @@ async function main() {
 
         const finalTx = addFinalSignature(baseTx, finalLedgerSignature);
 
-       // await sendTransactionADN(finalTx);
+       await sendTransactionADN(finalTx);
 
     };
 

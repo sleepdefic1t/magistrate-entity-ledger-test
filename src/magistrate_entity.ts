@@ -19,7 +19,7 @@ export const BUSINESS_ENTITY_ASSETS: IEntityAsset[] = [
         type: 0,
         subType: 0,
         action: 1,
-        registrationId: "0000000000000000000000000000000000000000000000000000000000000000",
+        registrationId: "",
         data: {
             ipfsData: "QmYSK2JyM3RyDyB52caZCTKFR3HKniEcMnNJYdk8DQ6KBB"
         }
@@ -28,7 +28,7 @@ export const BUSINESS_ENTITY_ASSETS: IEntityAsset[] = [
         type: 0,
         subType: 0,
         action: 2,
-        registrationId: "0000000000000000000000000000000000000000000000000000000000000000",
+        registrationId: "",
         data: {}
     }
 ];;
@@ -40,18 +40,24 @@ export function registerEntityTransactions() {
 
 export function getBusinessEntityTransaction(
     ledgerPublicKey: string,
-    ledgerWalletNonce: string,
+    ledgerWalletNonce: number,
     asset: IEntityAsset
 ) {
 
+    var fee = 0;
     if (asset.action > 0) {
         asset.registrationId = REGISTRATION_ID;
+
+        // some weirdness when sending w/default fee (5000000000 vs 500000000)
+        fee = 500000000;
     }
+
 
     const entityTx = new EntityBuilder()
         .network(30)
         .version(2)
-        .nonce(ledgerWalletNonce)
+        .fee(fee.toString())
+        .nonce(ledgerWalletNonce.toString())
         .senderPublicKey(ledgerPublicKey)
         .asset(asset)
         .build();
