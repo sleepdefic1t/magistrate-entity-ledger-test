@@ -1,0 +1,27 @@
+import { Blocks } from "./blocks";
+import { Bridgechains } from "./bridgechains";
+import { Businesses } from "./businesses";
+import { Delegates } from "./delegates";
+import { Locks } from "./locks";
+import { Node } from "./node";
+import { Peers } from "./peers";
+import { Rounds } from "./rounds";
+import { Transactions } from "./transactions";
+import { Votes } from "./votes";
+import { Wallets } from "./wallets";
+export * from "./resource";
+export declare const Resources: {
+    blocks: typeof Blocks;
+    bridgechains: typeof Bridgechains;
+    businesses: typeof Businesses;
+    delegates: typeof Delegates;
+    locks: typeof Locks;
+    node: typeof Node;
+    peers: typeof Peers;
+    rounds: typeof Rounds;
+    transactions: typeof Transactions;
+    votes: typeof Votes;
+    wallets: typeof Wallets;
+};
+export declare type AvailableResourcesName = keyof typeof Resources;
+export declare type AvailableResource<T extends AvailableResourcesName> = InstanceType<typeof Resources[T]>;
