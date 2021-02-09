@@ -1,8 +1,9 @@
 # magistrate-entity-test
 
-*\*\*NOT FOR PRODUCTION!\*\**
+*\*\*DEPRECATED!\*\**
 
-1) connect Ledger
+
+<!-- 1) connect Ledger
    - connection via USB
    - unlock with device pin
    - open the ARK Ledger App
@@ -255,4 +256,4 @@ ADN Response:  {
 
 ==================================================================
 
-```
+``` -->
